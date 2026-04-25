@@ -1,26 +1,38 @@
 @import "tailwindcss";
 
+@theme {
+  /* Industrial Light Theme Palette */
+  --color-brand-primary: #facc15; /* High-visibility Yellow */
+  --color-brand-dark: #000000; /* Pure Black for text/headings */
+  --color-brand-darker: #0a0a0a; /* Off-black for dark buttons */
+  --color-brand-light: #ffffff; /* Pure White for the background */
+  --color-brand-gray: #f3f4f6; /* Very light gray for cards/borders */
+  --color-brand-slate: #6b7280; /* Medium gray for secondary text */
+
+  /* Architectural Fonts */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui;
+  --font-mono: var(--font-roboto-mono), ui-monospace, monospace;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Light Mode Default */
+  --foreground: var(--color-brand-dark);
+  --background: var(--color-brand-light);
 }
 
 body {
-  background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--background);
+  
+  /* Subtle light gray grid on the white background */
+  background-image: 
+    linear-gradient(to right, #e5e7eb 1px, transparent 1px), 
+    linear-gradient(to bottom, #e5e7eb 1px, transparent 1px);
+  background-size: 40px 40px;
+  min-height: 100vh;
+}
+
+/* Custom utility for the drafting look */
+@utility technical-border {
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }

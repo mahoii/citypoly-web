@@ -1,65 +1,96 @@
-import Image from "next/image";
+import { client } from '../sanity/client';
+import Link from 'next/link';
+import HeroSlideshow from './components/HeroSlideshow'; // Restored your import!
 
-export default function Home() {
+export default async function HomePage() {
+  
+  const query = `*[_type == "announcement"] | order(_createdAt desc) {
+    _id,
+    title,
+    date,
+    tag,
+    "slug": slug.current
+  }`;
+
+  const announcements = await client.fetch(query);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className="flex min-h-screen flex-col items-center pb-20">
+      
+      {/* --- HERO SECTION --- */}
+      <section className="w-full py-16 px-6 max-w-7xl mx-auto border-b border-brand-dark/10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="flex flex-col items-start">
+            <h1 className="text-5xl md:text-7xl font-bold text-brand-dark tracking-tight mb-6 leading-tight">
+              Engineer Your <br />
+              <span className="relative inline-block">
+                <span className="absolute bottom-2 left-0 w-full h-1/2 bg-brand-primary -z-10"></span>
+                Future.
+              </span>
+            </h1>
+            <p className="text-xl text-brand-slate max-w-lg mb-10">
+              City Polytechnic High School of Engineering, Architecture, and Technology. 
+              Building the next generation of innovators in downtown Brooklyn.
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <Link href="/ptech" className="bg-brand-primary text-brand-dark font-bold font-mono text-sm px-6 py-3 border-2 border-brand-primary hover:shadow-lg transition-all inline-block">
+                EXPLORE P-TECH
+              </Link>
+              <Link href="/portfolio" className="bg-transparent text-brand-dark font-bold font-mono text-sm px-6 py-3 border-2 border-brand-dark hover:bg-brand-dark hover:text-brand-light transition-all inline-block">
+                STUDENT PORTFOLIOS
+              </Link>
+            </div>
+          </div>
+          <div className="w-full h-80 lg:h-full min-h-[400px] relative bg-gray-100 border border-brand-dark/10 overflow-hidden">
+             {/* --- RESTORED SLIDESHOW --- */}
+             <HeroSlideshow />
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* --- LATEST EVENTS FEED --- */}
+      <section className="w-full pt-16 px-6 max-w-7xl mx-auto">
+        <div className="flex justify-between items-end mb-10 border-b border-brand-dark/10 pb-4">
+          <h2 className="text-3xl font-bold text-brand-dark">Latest Events</h2>
         </div>
-      </main>
-    </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          
+          {announcements.length > 0 ? (
+            announcements.map((post: any) => (
+              <Link 
+                href={post.slug ? `/news/${post.slug}` : '#'} 
+                key={post._id} 
+                className="group border border-brand-dark/10 p-6 bg-white hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col min-h-[200px]"
+              >
+                <div className="flex justify-between items-center mb-6">
+                  <span className="text-xs font-mono font-bold tracking-wider text-brand-dark bg-brand-primary px-3 py-1">
+                    {post.tag}
+                  </span>
+                  <span className="text-xs font-mono text-brand-slate font-bold">
+                    {post.date}
+                  </span>
+                </div>
+                
+                <h3 className="text-xl font-bold text-brand-dark leading-snug group-hover:text-brand-primary transition-colors flex-grow">
+                  {post.title}
+                </h3>
+                
+                <div className="mt-6 pt-4 border-t border-brand-dark/10 flex justify-between items-center text-xs font-mono text-brand-slate">
+                  <span>READ_ARTICLE</span>
+                  <span className="group-hover:translate-x-2 transition-transform font-bold text-brand-primary">→</span>
+                </div>
+              </Link>
+            ))
+          ) : (
+            <div className="col-span-full py-12 text-center border-2 border-dashed border-brand-dark/20 text-brand-slate font-mono">
+              // NO_EVENTS_FOUND
+            </div>
+          )}
+
+        </div>
+      </section>
+
+    </main>
   );
 }
