@@ -5,7 +5,7 @@ import WBLOpportunitySlideshow from "../../components/WBLOpportunitySlideshow";
 const coordinator = {
   name: "Shannon Samms-Lezama",
   role: "Partnership Coordinator",
-  image: "/shannonwbl.jpg",
+  image: "/shannonwbl.png",
   initials: "SS",
   description:
     "The Work-Based Learning coordinator connects students with career-connected experiences that make the engineering, architecture, construction, and technology pathways feel real. That work includes building partner relationships, preparing students for professional settings, coordinating internships and site visits, and helping students reflect on the skills they are developing beyond the classroom.",
@@ -43,12 +43,27 @@ const opportunities = [
 ];
 
 const partnerLogos = [
-  { name: "MTA", detail: "Transit internships and career exposure" },
-  { name: "City Tech", detail: "Early college and pathway partner" },
-  { name: "NYC Public Schools", detail: "Career-connected learning support" },
-  { name: "NYC DYCD", detail: "Youth employment programs" },
-  { name: "Industry Scholars", detail: "Internship readiness pathway" },
-  { name: "WTS-GNY", detail: "Transportation career mentoring" },
+  { name: "MTA", logo: "/mtalogo.png" },
+  { name: "City Tech", logo: "/citytechlogo.jpg" },
+  { name: "NYC Public Schools", logo: "/nycps.png" },
+  { name: "NYC DYCD", logo: "/nycdycd.png" },
+  { name: "NYC DDC", logo: "/nycddc.png" },
+  { name: "NYC DOT", logo: "/nycdot.png" },
+  { name: "National Grid", logo: "/nationalgrid.jpg" },
+  { name: "IBM", logo: "/ibm.png" },
+  { name: "Industry Scholars", logo: "/industryscholars.png" },
+  { name: "WSP", logo: "/wsp.png" },
+  { name: "WTS-GNY", logo: "/wts.webp" },
+  { name: "ACE Mentor Program", logo: "/ace.png" },
+  { name: "BOLT Architecture", logo: "/boltarch.png" },
+  { name: "Brooklyn Combine", logo: "/bkcombine.png" },
+  { name: "Skanska", logo: "/skanska.png" },
+  { name: "RAND Engineering", logo: "/rand.png" },
+  { name: "BEAM Center", logo: "/beamcenter.png" },
+  { name: "Sadie Nash", logo: "/sadienash.webp" },
+  { name: "ASCE", logo: "/asce.png" },
+  { name: "Brooklyn Navy Yard", logo: "/navyyard.png" },
+  { name: "Luminary Labs", logo: "/luminarylabs.webp" },
 ];
 
 const wblSteps = [
@@ -103,16 +118,19 @@ export default function WorkBasedLearningPage() {
       </section>
 
       <section className="w-full px-6 py-20">
-        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
-          <div className="bg-white p-6 shadow-xl ring-1 ring-brand-dark/10">
-            <div className="aspect-[4/5] w-full overflow-hidden bg-brand-dark">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 lg:grid-cols-[390px_1fr] lg:items-center xl:grid-cols-[420px_1fr]">
+          <div className="w-full max-w-[340px] justify-self-center bg-white p-4 shadow-xl ring-1 ring-brand-dark/10 sm:max-w-[390px] lg:justify-self-start xl:max-w-[400px]">
+            <div className="aspect-square w-full overflow-hidden bg-brand-dark">
               {coordinator.image ? (
                 <Image
                   src={coordinator.image}
                   alt={coordinator.name}
-                  width={720}
-                  height={900}
+                  width={400}
+                  height={400}
+                  sizes="(min-width: 1280px) 400px, (min-width: 1024px) 390px, (min-width: 640px) 390px, 340px"
                   className="h-full w-full object-cover"
+                  priority
+                  quality={100}
                 />
               ) : (
                 <div className="flex h-full w-full flex-col items-center justify-center gap-6 bg-brand-dark text-white">
@@ -167,7 +185,7 @@ export default function WorkBasedLearningPage() {
                 Student Experiences
               </span>
               <h2 className="text-4xl font-bold text-brand-dark md:text-5xl">
-                WBL in action
+                Industry Experiences
               </h2>
             </div>
             <p className="max-w-xl text-brand-slate">
@@ -187,28 +205,33 @@ export default function WorkBasedLearningPage() {
               Partner Network
             </span>
             <h2 className="mb-4 text-4xl font-bold text-brand-dark md:text-5xl">
-              Companies and organizations opening doors
+              Our Partners
             </h2>
             <p className="text-lg leading-relaxed text-brand-slate">
-              City Poly works with employers, college partners, public agencies, and
-              workforce programs that help students see what their skills can become.
+              City Poly works with various companies, employers, college partners, public agencies, and
+              workforce programs that provide career exposure and help students see what their skills can become.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-x-16 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
             {partnerLogos.map((partner) => (
               <div
                 key={partner.name}
-                className="flex min-h-40 flex-col justify-between border border-brand-dark/10 bg-white p-6 transition-all hover:-translate-y-1 hover:shadow-xl"
+                className="flex min-h-24 items-center justify-center"
               >
-                <div className="flex h-20 items-center justify-center border border-brand-dark/10 bg-brand-gray px-4">
-                  <span className="text-center font-mono text-2xl font-black uppercase tracking-wide text-brand-dark">
+                {partner.logo ? (
+                  <Image
+                    src={partner.logo}
+                    alt={`${partner.name} logo`}
+                    width={220}
+                    height={90}
+                    className="max-h-20 w-auto max-w-full object-contain"
+                  />
+                ) : (
+                  <span className="text-center font-mono text-xl font-black uppercase tracking-wide text-brand-dark">
                     {partner.name}
                   </span>
-                </div>
-                <p className="mt-5 text-sm leading-relaxed text-brand-slate">
-                  {partner.detail}
-                </p>
+                )}
               </div>
             ))}
           </div>
