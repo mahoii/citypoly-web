@@ -43,6 +43,9 @@ export default function Navbar() {
                 <Link href="/ptech" className="px-5 py-4 hover:bg-brand-light hover:text-brand-primary border-b border-brand-dark/5 transition-colors font-bold">
                   P-TECH Program
                 </Link>
+                <Link href="/academics/work-based-learning" className="px-5 py-4 hover:bg-brand-light hover:text-brand-primary border-b border-brand-dark/5 transition-colors font-bold">
+                  Work-Based Learning
+                </Link>
                 <Link href="/portfolio" className="px-5 py-4 hover:bg-brand-light hover:text-brand-primary transition-colors font-bold">
                   Student Portfolios
                 </Link>
@@ -66,6 +69,7 @@ export default function Navbar() {
           <div className="text-xs font-bold text-brand-slate tracking-widest uppercase mb-2 border-b border-brand-dark/10 pb-2">Academics</div>
           <Link href="/eci" className="pl-4 font-bold text-lg text-brand-dark hover:text-brand-primary" onClick={() => setIsMobileMenuOpen(false)}>Early College (ECI)</Link>
           <Link href="/ptech" className="pl-4 font-bold text-lg text-brand-dark hover:text-brand-primary" onClick={() => setIsMobileMenuOpen(false)}>P-TECH Program</Link>
+          <Link href="/academics/work-based-learning" className="pl-4 font-bold text-lg text-brand-dark hover:text-brand-primary" onClick={() => setIsMobileMenuOpen(false)}>Work-Based Learning</Link>
           <Link href="/portfolio" className="pl-4 font-bold text-lg text-brand-dark hover:text-brand-primary" onClick={() => setIsMobileMenuOpen(false)}>Student Portfolios</Link>
           
           <div className="w-full h-px bg-brand-dark/10 my-2"></div>
