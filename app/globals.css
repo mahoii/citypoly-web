@@ -32,6 +32,23 @@ body {
   min-height: 100vh;
 }
 
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--color-brand-primary);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 /* Custom utility for the drafting look */
 @utility technical-border {
   border: 1px solid rgba(0, 0, 0, 0.1);

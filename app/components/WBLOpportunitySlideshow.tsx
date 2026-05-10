@@ -15,14 +15,29 @@ export default function WBLOpportunitySlideshow({
   opportunities: Opportunity[];
 }) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [shouldReduceMotion, setShouldReduceMotion] = useState(false);
 
   useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const updateMotionPreference = () => setShouldReduceMotion(mediaQuery.matches);
+
+    updateMotionPreference();
+    mediaQuery.addEventListener("change", updateMotionPreference);
+
+    return () => mediaQuery.removeEventListener("change", updateMotionPreference);
+  }, []);
+
+  useEffect(() => {
+    if (shouldReduceMotion || opportunities.length <= 1) {
+      return;
+    }
+
     const timer = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % opportunities.length);
     }, 5000);
 
     return () => clearInterval(timer);
-  }, [opportunities.length]);
+  }, [opportunities.length, shouldReduceMotion]);
 
   const goToPrevious = () => {
     setCurrentIndex((currentIndex - 1 + opportunities.length) % opportunities.length);
@@ -43,12 +58,13 @@ export default function WBLOpportunitySlideshow({
         >
           <Image
             src={opportunity.image}
-            alt={opportunity.title}
+            alt=""
+            aria-hidden="true"
             fill
             sizes="(min-width: 1280px) 1216px, 100vw"
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" aria-hidden="true" />
         </div>
       ))}
 

@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import PathwaySlideshow from '../components/PathwaySlideshow';
 
 const architectureImages = [
@@ -62,7 +61,7 @@ export default function ECIPage() {
         </h1>
         <p className="text-xl text-brand-slate max-w-3xl mb-10 leading-relaxed">
           Through our partnership with <strong className="text-brand-dark"><a href='https://www.citytech.cuny.edu/'>New York City College of Technology (City Tech)</a></strong>, 
-          City Poly students don't just prepare for college—they experience it. Earn tuition-free college credits and an Associates Degree 
+          City Poly students do not just prepare for college - they experience it. Earn tuition-free college credits and an Associates Degree 
           while completing your high school diploma across three specialized pathways.
         </p>
       </section>
